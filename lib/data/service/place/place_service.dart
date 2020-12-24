@@ -11,6 +11,9 @@ abstract class PlaceService {
 
   factory PlaceService(Dio dio, {String baseUrl}) = _PlaceService;
 
+  @POST("place/save")
+  Future<Place> createPlace(@Body() Place place);
+
   @GET("place/search_cep/{cep}")
   Future<Place> searchCep(@Path("cep") String cep);
 

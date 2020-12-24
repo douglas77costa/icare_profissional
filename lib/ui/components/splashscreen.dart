@@ -9,7 +9,7 @@ class SplashScreen extends StatefulWidget {
   final Text title;
   final Color backgroundColor;
   final TextStyle styleTextUnderTheLoader;
-  final dynamic navigateAfterSeconds;
+  final Future<VoidCallback> navigateAfterSeconds;
   final double photoSize;
   final dynamic onClick;
   final Color loaderColor;
@@ -42,7 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: widget.seconds), () {
-      if (widget.navigateAfterSeconds is String) {
+      widget.navigateAfterSeconds.then((value) => value.call());
+      /*if (widget.navigateAfterSeconds is String) {
         // It's fairly safe to assume this is using the in-built material
         // named route component
         Navigator.of(context).pushReplacementNamed(widget.navigateAfterSeconds);
@@ -52,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else {
         throw new ArgumentError(
             'widget.navigateAfterSeconds must either be a String or Widget');
-      }
+      }*/
     });
   }
 

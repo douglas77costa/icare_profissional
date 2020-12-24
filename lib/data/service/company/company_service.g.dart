@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'place_service.dart';
+part of 'company_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _PlaceService implements PlaceService {
-  _PlaceService(this._dio, {this.baseUrl}) {
+class _CompanyService implements CompanyService {
+  _CompanyService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
     baseUrl ??= 'https://icare-app-br.herokuapp.com/';
   }
@@ -17,14 +17,14 @@ class _PlaceService implements PlaceService {
   String baseUrl;
 
   @override
-  Future<Place> createPlace(place) async {
-    ArgumentError.checkNotNull(place, 'place');
+  Future<Company> createCompany(company) async {
+    ArgumentError.checkNotNull(company, 'company');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(place?.toJson() ?? <String, dynamic>{});
+    _data.addAll(company?.toJson() ?? <String, dynamic>{});
     _data.removeWhere((k, v) => v == null);
-    final _result = await _dio.request<Map<String, dynamic>>('place/save',
+    final _result = await _dio.request<Map<String, dynamic>>('company/save',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -32,18 +32,16 @@ class _PlaceService implements PlaceService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Place.fromJson(_result.data);
+    final value = Company.fromJson(_result.data);
     return value;
   }
 
   @override
-  Future<Place> searchCep(cep) async {
-    ArgumentError.checkNotNull(cep, 'cep');
+  Future<List<Company>> findAll() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'place/search_cep/$cep',
+    final _result = await _dio.request<List<dynamic>>('company/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -51,7 +49,9 @@ class _PlaceService implements PlaceService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = Place.fromJson(_result.data);
+    var value = _result.data
+        .map((dynamic i) => Company.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 }

@@ -11,6 +11,12 @@ abstract class UserService {
 
   factory UserService(Dio dio, {String baseUrl}) = _UserService;
 
+  @GET("user/check/{email}")
+  Future<bool> checkUser(@Path("email") String email);
+
+  @POST("user/signup")
+  Future<User> signupUser(@Body() User user);
+
   @GET('user/list')
   Future<List<User>> findAll();
 

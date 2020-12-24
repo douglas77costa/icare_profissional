@@ -39,9 +39,15 @@ class RegisterPage extends StatelessWidget {
               onPressed: () async {
                 switch (pageController.page.toInt()) {
                   case 0:
-                    pageController.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease);
+                    if(controller.validateUser()){
+                      if(await controller.checkUser()){
+                        pageController.nextPage(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.ease);
+                      }else{
+                        BotToast.showText(text: "Email já cadastrado!");
+                      }
+                    }
                     break;
                   case 1:
                     if (controller.validateCompany()) {
@@ -53,9 +59,7 @@ class RegisterPage extends StatelessWidget {
                     }
                     break;
                   case 2:
-                    pageController.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.ease);
+                    controller.saveCompany();
                     break;
                 }
               },

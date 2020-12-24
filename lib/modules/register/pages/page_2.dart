@@ -17,13 +17,6 @@ import 'package:line_icons/line_icons.dart';
 class Page2 extends StatelessWidget {
   final RegisterController controller = Get.find();
 
-  List<TypeCompany> listTc = [
-    TypeCompany(0, 'Selecione o tipo de estabelecimento'),
-    TypeCompany(1, 'Salão de Beleza'),
-    TypeCompany(2, 'Barbearia'),
-    TypeCompany(3, 'Outro')
-  ];
-
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -161,6 +154,7 @@ class Page2 extends StatelessWidget {
                     return Container(
                       margin: EdgeInsets.only(top: 10, left: 30, right: 30),
                       child: DropdownButton(
+                        hint: Text("${controller.validateTipoEmpresa()}"),
                         value: controller.company.value.idTypeCompany,
                         elevation: 16,
                         style: TextStyle(color: Colors.white),
@@ -170,6 +164,7 @@ class Page2 extends StatelessWidget {
                           controller.company.update((val) {
                             val.idTypeCompany =newValue;
                           });
+                          controller.validateTipoEmpresa();
                         },
                         underline: Container(
                           height: 2,

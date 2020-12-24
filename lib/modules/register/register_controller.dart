@@ -7,16 +7,23 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:icare_profissional/data/model/company/company.dart';
 import 'package:icare_profissional/data/model/place/place.dart';
 import 'package:icare_profissional/data/model/type_company/type_company.dart';
 import 'package:icare_profissional/data/model/user/user.dart';
+import 'package:icare_profissional/data/repository/company_repository.dart';
+import 'package:icare_profissional/data/repository/user_repository.dart';
+import 'package:icare_profissional/data/service/company/company_service.dart';
 import 'package:icare_profissional/data/service/place/place_service.dart';
 import 'package:icare_profissional/data/service/type_company/type_company_service.dart';
+import 'package:icare_profissional/data/service/user/user_service.dart';
+import 'package:icare_profissional/util/constants.dart';
 import 'package:icare_profissional/util/util.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterController extends GetxController {
+  //Variables
   final showPassword = false.obs;
   final RxString textErrorPass = "".obs;
   final image = Image.asset(
@@ -35,10 +42,15 @@ class RegisterController extends GetxController {
   final company = Company(idTypeCompany: 0).obs;
   final place = Place().obs;
 
+  //API
   final typeCompanyService = TypeCompanyService(Dio());
   final placeService = PlaceService(Dio());
+  final companyService = CompanyService(Dio());
+  final userService = UserService(Dio());
 
-  void onInit() {
+  //DataBase
+
+  void onInit() async {
     super.onInit();
     getTypeCompany();
   }
@@ -57,7 +69,7 @@ class RegisterController extends GetxController {
     });
   }
 
-  imgFromCamera() async {
+  void imgFromCamera() async {
     final picker = ImagePicker();
     final pickedFile =
         await picker.getImage(source: ImageSource.camera, imageQuality: 50);
@@ -70,7 +82,7 @@ class RegisterController extends GetxController {
     file.value = File(pickedFile.path);
   }
 
-  imgFromGallery() async {
+  void imgFromGallery() async {
     final picker = ImagePicker();
     final pickedFile =
         await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
@@ -84,18 +96,17 @@ class RegisterController extends GetxController {
   }
 
   Future uploadFile() async {
-    if(!file.value.path.isNullOrBlank){
+    if (!file.value.path.isNullOrBlank) {
       var storageReference =
-      FirebaseStorage.instance.ref().child('logo/${DateTime.now()}');
+          FirebaseStorage.instance.ref().child('logo/${DateTime.now()}');
       UploadTask uploadTask = storageReference.putFile(file.value);
       await uploadTask;
       storageReference.getDownloadURL().then((fileURL) {
         company.value.srcImage = fileURL;
       });
-    }else{
+    } else {
       company.value.srcImage = null;
     }
-
   }
 
   bool validateUser() {
@@ -112,10 +123,11 @@ class RegisterController extends GetxController {
     }
   }
 
-  bool validateCompany(){
+  bool validateCompany() {
     if (validateNomeEmpresa().isNullOrBlank &&
         validatePhoneEmpresa().isNullOrBlank &&
         validateDescricaoEmpresa().isNullOrBlank &&
+        validateTipoEmpresa().isNullOrBlank &&
         validateCEPEmpresa().isNullOrBlank) {
       return true;
     } else {
@@ -124,15 +136,26 @@ class RegisterController extends GetxController {
     }
   }
 
-  Future<bool> searchCep()async{
+  Future<bool> checkUser() async {
     if (await Util.isConected()) {
       isLoad.value = true;
-      try{
+      return await userService.checkUser(user.value.email).whenComplete(() {
+        isLoad.value = false;
+      });
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> searchCep() async {
+    if (await Util.isConected()) {
+      isLoad.value = true;
+      try {
         place.value = await placeService.searchCep(place.value.zipCode);
         await uploadFile();
         isLoad.value = false;
         return true;
-      }catch(obj){
+      } catch (obj) {
         isLoad.value = false;
         switch (obj.runtimeType) {
           case DioError:
@@ -142,7 +165,7 @@ class RegisterController extends GetxController {
             } else {
               BotToast.showText(
                   text:
-                  "Erro ao buscar dados: ${res.statusCode} -> ${res.statusMessage}");
+                      "Erro ao buscar dados: ${res.statusCode} -> ${res.statusMessage}");
             }
             return false;
             break;
@@ -151,34 +174,82 @@ class RegisterController extends GetxController {
             break;
         }
       }
-
-      /*var placeNew = await placeService.searchCep(place.value.zipCode).then((value) async{
-        isLoad.value = false;
-        await uploadFile();
-        return true;
-      }).catchError((Object obj) {
-        isLoad.value = false;
-        return false;
-        *//*switch (obj.runtimeType) {
-          case DioError:
-            final res = (obj as DioError).response;
-            if (res.statusCode == 404) {
-              BotToast.showText(text: "CEP não encontrado!");
-            } else {
-              BotToast.showText(
-                  text:
-                  "Erro ao buscar dados: ${res.statusCode} -> ${res.statusMessage}");
-            }
-            return false;
-            break;
-          default:
-            return false;
-            break;
-        }*//*
-      });*/
-
     } else {
       return false;
+    }
+  }
+
+  Future saveCompany() async {
+    if (await Util.isConected()) {
+      isLoad.value = true;
+      try {
+        company.value = await companyService.createCompany(company.value);
+        await CompanyRepository.saveCompany(company.value);
+        savePlace();
+        isLoad.value = false;
+      } catch (obj) {
+        isLoad.value = false;
+        switch (obj.runtimeType) {
+          case DioError:
+            final res = (obj as DioError).response;
+            BotToast.showText(
+                text:
+                    "Erro ao salvar empresa: ${res.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  Future savePlace() async {
+    if (await Util.isConected()) {
+      isLoad.value = true;
+      try {
+        place.value.idCompany = company.value.id;
+        place.value = await placeService.createPlace(place.value);
+        saveUser();
+        isLoad.value = false;
+      } catch (obj) {
+        isLoad.value = false;
+        switch (obj.runtimeType) {
+          case DioError:
+            final res = (obj as DioError).response;
+            BotToast.showText(
+                text:
+                    "Erro ao salvar local: ${res.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  Future saveUser() async {
+    if (await Util.isConected()) {
+      isLoad.value = true;
+      try {
+        user.value.idCompany = company.value.id;
+        user.value.idTypeUser = 1;
+        user.value = await userService.signupUser(user.value);
+        await UserRepository.saveUser(user.value);
+        Get.toNamed("/main");
+        isLoad.value = false;
+      } catch (obj) {
+        isLoad.value = false;
+        switch (obj.runtimeType) {
+          case DioError:
+            final res = (obj as DioError).response;
+            BotToast.showText(
+                text:
+                    "Erro ao salvar local: ${res.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
+        }
+      }
     }
   }
 
@@ -231,6 +302,15 @@ class RegisterController extends GetxController {
       return "A senha não pode ser vazia!";
     } else if (user.value.password.length < 4) {
       return "A senha não pode ser menor que 4 carateres!";
+    } else {
+      return null;
+    }
+  }
+
+  String validateTipoEmpresa() {
+    if (company.value.idTypeCompany.isNullOrBlank ||
+        company.value.idTypeCompany == 0) {
+      return "Selecione uma categoria";
     } else {
       return null;
     }

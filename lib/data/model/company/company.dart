@@ -1,16 +1,26 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'company.g.dart';
 
 @JsonSerializable()
+@HiveType(typeId: 1)
 class Company {
+  @HiveField(0)
   int id;
+  @HiveField(1)
   String cnpj;
+  @HiveField(2)
   String razaoSocial;
+  @HiveField(3)
   String nomeFantasia;
+  @HiveField(4)
   String descricao;
+  @HiveField(5)
   String srcImage;
+  @HiveField(6)
   String phone;
+  @HiveField(7)
   int idTypeCompany;
 
   Company(

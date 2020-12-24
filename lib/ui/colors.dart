@@ -9,4 +9,5 @@ abstract class ColorsApp{
   static const Color acentLight =  Color(0XffE7BD5C);
   static const Color dark =  Color(0Xff191919);
   static const Color darkBackground =  Color(0Xff303030);
+
 }
