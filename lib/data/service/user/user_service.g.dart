@@ -55,6 +55,26 @@ class _UserService implements UserService {
   }
 
   @override
+  Future<Token> loginUser(loginRequest) async {
+    ArgumentError.checkNotNull(loginRequest, 'loginRequest');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(loginRequest?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('login',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Token.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<List<User>> findAll() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -70,6 +90,24 @@ class _UserService implements UserService {
     var value = _result.data
         .map((dynamic i) => User.fromJson(i as Map<String, dynamic>))
         .toList();
+    return value;
+  }
+
+  @override
+  Future<User> profile(token) async {
+    ArgumentError.checkNotNull(token, 'token');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>('user/profile',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = User.fromJson(_result.data);
     return value;
   }
 }

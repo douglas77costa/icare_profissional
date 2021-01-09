@@ -1,5 +1,7 @@
 
+import 'package:icare_profissional/data/model/token/token.dart';
 import 'package:icare_profissional/data/model/user/user.dart';
+import 'package:icare_profissional/data/request/login_request/login_request.dart';
 import 'package:icare_profissional/util/constants.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
@@ -17,7 +19,13 @@ abstract class UserService {
   @POST("user/signup")
   Future<User> signupUser(@Body() User user);
 
+  @POST("login")
+  Future<Token> loginUser(@Body() LoginRequest loginRequest);
+
   @GET('user/list')
   Future<List<User>> findAll();
+
+  @GET('user/profile')
+  Future<User> profile(@Header("Authorization") String token);
 
 }

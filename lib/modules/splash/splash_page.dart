@@ -10,7 +10,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SplashController controller = Get.put(SplashController());
+    final SplashController controller = Get.find();
     return SplashScreen(
       seconds: 3,
       title: Text(
@@ -29,4 +29,6 @@ class SplashPage extends StatelessWidget {
       ),
     );
   }
+
+
 }

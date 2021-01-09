@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,9 +9,11 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive/hive.dart';
 import 'package:icare_profissional/data/model/company/company.dart';
+import 'package:icare_profissional/data/model/token/token.dart';
 import 'package:icare_profissional/data/model/user/user.dart';
 import 'package:icare_profissional/modules/register/register_bind.dart';
 import 'package:icare_profissional/modules/register/register_page.dart';
+import 'package:icare_profissional/modules/splash/splash_bind.dart';
 import 'package:icare_profissional/modules/splash/splash_page.dart';
 import 'package:icare_profissional/ui/app_theme.dart';
 import 'package:path_provider/path_provider.dart';
@@ -18,16 +21,28 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'modules/home/home_page.dart';
+import 'modules/login/login_bind.dart';
+import 'modules/login/login_page.dart';
 import 'modules/main/main_bind.dart';
 import 'modules/main/main_page.dart';
+import 'modules/menu/menu_bind.dart';
+import 'modules/menu/menu_page.dart';
+import 'modules/profile/profile_bind.dart';
+import 'modules/profile/profile_page.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initHive();
+  runApp(IcareApp());
+}
+
+
+Future initHive()async{
   Directory directory = await getApplicationDocumentsDirectory();
   await Hive.init(directory.path);
   Hive.registerAdapter<User>(UserAdapter());
   Hive.registerAdapter<Company>(CompanyAdapter());
-  runApp(IcareApp());
+  Hive.registerAdapter<Token>(TokenAdapter());
 }
 
 class IcareApp extends StatelessWidget {
@@ -43,29 +58,30 @@ class IcareApp extends StatelessWidget {
     Firebase.initializeApp();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      initialRoute: "/",
       darkTheme: appThemeData(context),
       theme: appThemeData(context),
-      defaultTransition: Transition.fadeIn,
+      defaultTransition: Transition.fade,
       getPages: [
-        GetPage(
-          name: "/",
+        GetPage(name: "/",
           page: () => SplashPage(),
+          binding: SplashBind()
         ),
-        GetPage(
-          name: '/home',
+        GetPage(name: '/home',
           page: () => HomePage(),
         ),
-        GetPage(
-            name: '/register',
-            page: () => RegisterPage(),
-            binding: RegisterBind()),
-        GetPage(
-            name: '/main',
-            page: () => MainPage(),
-            binding: MainBind()),
+        GetPage(name: '/login',
+            page: () => LoginPage(), binding: LoginBind()),
+        GetPage(name: '/register',
+            page: () => RegisterPage(), binding: RegisterBind()),
+        GetPage(name: '/main',
+            page: () => MainPage(), binding: MainBind()),
+        GetPage(name: '/menu',
+            page: () => MenuPage(), binding: MenuBind()),
+        GetPage(name: '/profile',
+            page: () => ProfilePage(), binding: ProfileBind()),
       ],
-     builder: (context, child) {
+      builder: (context, child) {
         child = ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(context, child),
             maxWidth: 1920,

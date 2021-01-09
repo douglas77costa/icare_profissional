@@ -6,9 +6,8 @@ class CompanyRepository{
 
   static Future<Company> saveCompany(Company company)async{
     var dbCompany = await Hive.openBox<Company>(Constants.BD_COMPANY);
-    var index = await dbCompany.add(company);
-    company.id = index;
-    dbCompany.putAt(index, company);
+    await dbCompany.clear();
+    await dbCompany.put(company.id, company);
     return company;
   }
 
@@ -17,4 +16,8 @@ class CompanyRepository{
     return dbCompany.values.toList();
   }
 
+  static Future<Company> getCompany()async{
+    var dbCompany = await Hive.openBox<Company>(Constants.BD_COMPANY);
+    return dbCompany.values.toList().first;
+  }
 }

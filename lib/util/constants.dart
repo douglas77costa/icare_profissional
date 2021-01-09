@@ -6,4 +6,5 @@ abstract class Constants{
 
   static const String BD_USER = "bd_user";
   static const String BD_COMPANY = "bd_company";
+  static const String BD_TOKEN = "bd_token";
 }

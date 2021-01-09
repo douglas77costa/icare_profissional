@@ -6,6 +6,7 @@ part 'user.g.dart';
 @JsonSerializable()
 @HiveType(typeId: 0)
 class User extends HiveObject{
+
   @HiveField(0)
   int id;
   @HiveField(1)

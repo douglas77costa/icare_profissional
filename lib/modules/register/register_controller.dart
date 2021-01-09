@@ -7,18 +7,18 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:icare_profissional/data/model/company/company.dart';
 import 'package:icare_profissional/data/model/place/place.dart';
 import 'package:icare_profissional/data/model/type_company/type_company.dart';
 import 'package:icare_profissional/data/model/user/user.dart';
 import 'package:icare_profissional/data/repository/company_repository.dart';
+import 'package:icare_profissional/data/repository/token_repository.dart';
 import 'package:icare_profissional/data/repository/user_repository.dart';
+import 'package:icare_profissional/data/request/login_request/login_request.dart';
 import 'package:icare_profissional/data/service/company/company_service.dart';
 import 'package:icare_profissional/data/service/place/place_service.dart';
 import 'package:icare_profissional/data/service/type_company/type_company_service.dart';
 import 'package:icare_profissional/data/service/user/user_service.dart';
-import 'package:icare_profissional/util/constants.dart';
 import 'package:icare_profissional/util/util.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -231,10 +231,36 @@ class RegisterController extends GetxController {
     if (await Util.isConected()) {
       isLoad.value = true;
       try {
+        String pass = user.value.password;
         user.value.idCompany = company.value.id;
         user.value.idTypeUser = 1;
         user.value = await userService.signupUser(user.value);
+        user.value.password = pass;
         await UserRepository.saveUser(user.value);
+        await doLogin();
+        isLoad.value = false;
+      } catch (obj) {
+        isLoad.value = false;
+        switch (obj.runtimeType) {
+          case DioError:
+            final res = (obj as DioError).response;
+            BotToast.showText(
+                text:
+                    "Erro ao salvar usuário: ${res.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  Future doLogin()async{
+    if (await Util.isConected()) {
+      isLoad.value = true;
+      try {
+        var token = await userService.loginUser(LoginRequest(user.value.email,user.value.password));
+        await TokenRepository.saveToken(token);
         Get.toNamed("/main");
         isLoad.value = false;
       } catch (obj) {
@@ -244,7 +270,7 @@ class RegisterController extends GetxController {
             final res = (obj as DioError).response;
             BotToast.showText(
                 text:
-                    "Erro ao salvar local: ${res.statusCode} -> ${res.statusMessage}");
+                "Erro ao fazer login: ${res.statusCode} -> ${res.statusMessage}");
             break;
           default:
             break;

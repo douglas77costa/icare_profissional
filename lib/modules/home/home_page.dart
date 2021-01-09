@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                 padding: EdgeInsets.only(top: 20),
                 child: GFButton(
                   onPressed: (){
-                  Get.toNamed("/register");
+                  Get.toNamed("/login");
                   },
                   color: Colors.white,
                   text: "QUERO ME LOGAR",

@@ -8,6 +8,5 @@ class SplashBind extends Bindings {
     Get.lazyPut<SplashController>(() {
       return SplashController();
     });
-
   }
 }

@@ -17,8 +17,8 @@ class CardServiceItem extends StatelessWidget {
           children: [
             Divider(),
             Container(
-              padding: EdgeInsets.only(left: 10),
-              margin: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(left: 10, top: 10),
+              margin: EdgeInsets.only(top: 0),
               child: Row(
                 children: [
                   GFAvatar(
@@ -50,8 +50,8 @@ class CardServiceItem extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                     text: 'R\$ 20',
-                                    style:
-                                    TextStyle(fontWeight: FontWeight.normal)),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.normal)),
                               ],
                             ),
                           ),
@@ -66,8 +66,8 @@ class CardServiceItem extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                     text: '1h',
-                                    style:
-                                    TextStyle(fontWeight: FontWeight.normal)),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.normal)),
                               ],
                             ),
                           ),
@@ -82,8 +82,8 @@ class CardServiceItem extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                     text: 'Presencial ou Delivery',
-                                    style:
-                                    TextStyle(fontWeight: FontWeight.normal)),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.normal)),
                               ],
                             ),
                           ),
@@ -96,7 +96,8 @@ class CardServiceItem extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 70, left: 35),
                     child: PopupMenuButton<Acao>(
                       onSelected: (Acao result) {},
-                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Acao>>[
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<Acao>>[
                         const PopupMenuItem<Acao>(
                           value: Acao.editar,
                           child: Text('Editar'),
