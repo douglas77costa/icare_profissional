@@ -17,4 +17,7 @@ abstract class PlaceService {
   @GET("place/search_cep/{cep}")
   Future<Place> searchCep(@Path("cep") String cep);
 
+  @GET("place/this")
+  Future<Place> thisPlace(@Header("Authorization") String token);
+
 }

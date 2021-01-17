@@ -18,6 +18,10 @@ class UserRepository {
   static Future<User> getUser() async {
     var dbUser = await Hive.openBox<User>(Constants.BD_USER);
     var user = dbUser.values.toList();
-    return user.single;
+    if(user.isNotEmpty){
+      return user.single;
+    }else{
+      return User();
+    }
   }
 }

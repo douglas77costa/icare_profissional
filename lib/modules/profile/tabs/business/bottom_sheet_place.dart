@@ -1,44 +1,46 @@
-
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:get/get.dart';
-import 'package:getwidget/components/appbar/gf_appbar.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/shape/gf_button_shape.dart';
+import 'package:getwidget/types/gf_button_type.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:icare_profissional/ui/colors.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:get/get.dart';
 
-import '../register_controller.dart';
+import '../../profile_controller.dart';
 
-class Page3 extends StatelessWidget {
-  final RegisterController controller = Get.find();
-  final _formKey = GlobalKey<FormState>();
+class BottomSheetPlace extends StatelessWidget {
+  final ProfileController controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GFAppBar(
-        title: Text("Local do seu estabelecimento"),
-        elevation: 2,
-        centerTitle: true,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            CupertinoIcons.back,
-            color: Colors.white,
-          ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
+    return SafeArea(
+        top: true,
+        child: Container(
+          margin: EdgeInsets.only(top: 40, left: 0, right: 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 50, left: 30, right: 30),
+                    width: double.infinity,
+                    margin: EdgeInsets.only(bottom: 25, left: 10),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(CupertinoIcons.back),
+                          color: Colors.white,
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+
+                  Container(
+                    margin: EdgeInsets.only(top: 0, left: 30, right: 30),
                     child: TextFormField(
                       initialValue: controller.place.value.street,
                       decoration: InputDecoration(
@@ -97,24 +99,27 @@ class Page3 extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+              Container(
+                width: double.infinity,
+                padding:
+                EdgeInsets.only(top: 45, bottom: 25, left: 30, right: 30),
+                child: GFButton(
+                  onPressed: () async {
+                    Navigator.of(context, rootNavigator: true).pop();
+                    controller.updateCompany(VALUE_COMPANY.descricao);
+                  },
+                  color: ColorsApp.acent,
+                  text: "SALVAR",
+                  shape: GFButtonShape.pills,
+                  type: GFButtonType.outline,
+                  size: 50,
+                  fullWidthButton: true,
+                  textStyle:
+                  GoogleFonts.asap(color: ColorsApp.acent, fontSize: 20),
+                ),
+              )
+            ],
           ),
-          Obx(() {
-            return Visibility(
-                visible: controller.isLoad.value,
-                child: Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  color: ColorsApp.darkBackground,
-                  child: Center(
-                    child: SpinKitThreeBounce(
-                      color: ColorsApp.acent,
-                    ),
-                  ),
-                ));
-          })
-        ],
-      ),
-    );
+        ));
   }
 }

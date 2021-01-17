@@ -88,9 +88,10 @@ class IcareApp extends StatelessWidget {
             minWidth: 480,
             defaultScale: true,
             breakpoints: [
-              ResponsiveBreakpoint.resize(480, name: MOBILE),
-              ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+              ResponsiveBreakpoint.autoScale(480, name: MOBILE),
+              ResponsiveBreakpoint.resize(600, name: MOBILE),
+              ResponsiveBreakpoint.resize(850, name: TABLET),
+              ResponsiveBreakpoint.resize(1080, name: DESKTOP),
             ],
             background: Container(color: Color(0xFFF5F5F5))); //do something
         child = botToastBuilder(context, child);

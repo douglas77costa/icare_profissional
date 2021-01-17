@@ -11,6 +11,7 @@ import 'package:icare_profissional/data/repository/company_repository.dart';
 import 'package:icare_profissional/data/repository/token_repository.dart';
 import 'package:icare_profissional/data/repository/user_repository.dart';
 import 'package:icare_profissional/data/service/company/company_service.dart';
+import 'package:icare_profissional/data/service/place/place_service.dart';
 import 'package:icare_profissional/data/service/type_company/type_company_service.dart';
 import 'package:icare_profissional/util/util.dart';
 
@@ -38,6 +39,7 @@ class ProfileController extends GetxController {
   //API
   final typeCompanyService = TypeCompanyService(Dio());
   final companyService = CompanyService(Dio());
+  final placeService = PlaceService(Dio());
 
   @override
   void onInit() async {
@@ -46,6 +48,7 @@ class ProfileController extends GetxController {
     user.value = await UserRepository.getUser();
     company.value = await CompanyRepository.getCompany();
     await getTypeCompany();
+    await getPlace();
     isLoad.value = false;
     super.onInit();
   }
@@ -64,13 +67,21 @@ class ProfileController extends GetxController {
 
   Future getPlace() async {
     if (await Util.isConected()) {
-      var value = await typeCompanyService.findAll();
-      value.forEach((type) {
-        if (company.value.idTypeCompany == type.id) {
-          labelTypeCompany.value = type.description;
+      try{
+       place.value = await placeService.thisPlace(token);
+      }catch (obj) {
+        isLoad.value = false;
+        switch (obj.runtimeType) {
+          case DioError:
+            final res = (obj as DioError).response;
+            BotToast.showText(
+                text:
+                "Erro ao buscar local: ${res.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
         }
-      });
-      listTc.addAll(value);
+      }
     }
   }
 

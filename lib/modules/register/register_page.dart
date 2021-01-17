@@ -28,7 +28,6 @@ class RegisterPage extends StatelessWidget {
               children: <Widget>[Page1(), Page2(), Page3()],
               onPageChanged: (num) {
                 page = num;
-                print("Número da página atual : " + num.toString());
               },
             ),
           ),
@@ -50,11 +49,13 @@ class RegisterPage extends StatelessWidget {
                     }
                     break;
                   case 1:
-                    if (controller.validateCompany()) {
-                      if(await controller.searchCep()){
-                        pageController.nextPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease);
+                    if(controller.validateImage()){
+                      if (controller.validateCompany()) {
+                        if(await controller.searchCep()){
+                          pageController.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease);
+                        }
                       }
                     }
                     break;

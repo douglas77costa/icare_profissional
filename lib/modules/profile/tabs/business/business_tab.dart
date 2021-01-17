@@ -3,15 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/components/avatar/gf_avatar.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/shape/gf_button_shape.dart';
-import 'package:getwidget/types/gf_button_type.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:icare_profissional/modules/profile/tabs/business/bottom_sheet_descricao.dart';
 import 'package:icare_profissional/modules/profile/tabs/business/bottom_sheet_phone.dart';
+import 'package:icare_profissional/modules/profile/tabs/business/bottom_sheet_place.dart';
 import 'package:icare_profissional/ui/colors.dart';
-import 'package:line_icons/line_icons.dart';
 
 import '../../profile_controller.dart';
 import 'bottom_sheet_name.dart';
@@ -187,7 +182,7 @@ class BusinessTab extends StatelessWidget {
                   child: Material(
                     child: InkWell(
                       onTap: () {
-                        _editPhone(context);
+                        _editPlace(context);
                       },
                       child: Container(
                         width: double.infinity,
@@ -195,7 +190,7 @@ class BusinessTab extends StatelessWidget {
                         child: ListTile(
                           title: Obx(() {
                             return Text(
-                              UtilBrasilFields.obterTelefone("${controller.company.value.phone}"),
+                              "${controller.place.value.city} - ${controller.place.value.state}",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -274,4 +269,15 @@ class BusinessTab extends StatelessWidget {
           return BottomSheetTypeCompany();
         });
   }
+
+  void _editPlace(context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        isDismissible: true,
+        builder: (BuildContext context) {
+          return BottomSheetPlace();
+        });
+  }
+
 }

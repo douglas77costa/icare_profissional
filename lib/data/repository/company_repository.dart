@@ -18,6 +18,11 @@ class CompanyRepository{
 
   static Future<Company> getCompany()async{
     var dbCompany = await Hive.openBox<Company>(Constants.BD_COMPANY);
-    return dbCompany.values.toList().first;
+    var company =dbCompany.values.toList();
+    if(company.isNotEmpty){
+      return company.single;
+    }else{
+      return Company();
+    }
   }
 }

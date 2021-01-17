@@ -20,80 +20,85 @@ class CardServiceItem extends StatelessWidget {
               padding: EdgeInsets.only(left: 10, top: 10),
               margin: EdgeInsets.only(top: 0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GFAvatar(
-                    backgroundImage: AssetImage('images/icon.png'),
-                    radius: 50,
+                  Row(
+                    children: [
+                      GFAvatar(
+                        backgroundImage: AssetImage('images/icon.png'),
+                        radius: 60,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                "Corte de Cabelo Masculino",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: ColorsApp.acentLight),
+                              ),
+                              margin: EdgeInsets.only(bottom: 10),
+                            ),
+                            Container(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Preço: ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 16),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: 'R\$ 20',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal)),
+                                  ],
+                                ),
+                              ),
+                              margin: EdgeInsets.only(bottom: 5),
+                            ),
+                            Container(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Duração: ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 16),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: '1h',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal)),
+                                  ],
+                                ),
+                              ),
+                              margin: EdgeInsets.only(bottom: 5),
+                            ),
+                            Container(
+                              child: RichText(
+                                text: TextSpan(
+                                  text: 'Locais: ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 16),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: 'Presencial ou Delivery',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal)),
+                                  ],
+                                ),
+                              ),
+                              margin: EdgeInsets.only(bottom: 5),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            "Corte de Cabelo Masculino",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: ColorsApp.acentLight),
-                          ),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                        Container(
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Preço: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: 'R\$ 20',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.normal)),
-                              ],
-                            ),
-                          ),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                        Container(
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Duração: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: '1h',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.normal)),
-                              ],
-                            ),
-                          ),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                        Container(
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Locais: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: 'Presencial ou Delivery',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.normal)),
-                              ],
-                            ),
-                          ),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 70, left: 35),
+                    margin: EdgeInsets.only(bottom: 0, left: 0),
                     child: PopupMenuButton<Acao>(
                       onSelected: (Acao result) {},
                       itemBuilder: (BuildContext context) =>

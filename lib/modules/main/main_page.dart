@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:icare_profissional/modules/main/main_controller.dart';
 import 'package:icare_profissional/modules/menu/menu_page.dart';
@@ -19,14 +20,32 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        backgroundColor: ColorsApp.primary,
-        navBarStyle:
+      body: Stack(
+        children: [
+          PersistentTabView(
+            context,
+            controller: _controller,
+            screens: _buildScreens(),
+            items: _navBarsItems(),
+            backgroundColor: ColorsApp.primary,
+            navBarStyle:
             NavBarStyle.style3, // Choose the nav bar style with this property.
+          ),
+          Obx(() {
+            return Visibility(
+                visible: controller.isLoad.value,
+                child: Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: ColorsApp.darkBackground,
+                  child: Center(
+                    child: SpinKitThreeBounce(
+                      color: ColorsApp.acent,
+                    ),
+                  ),
+                ));
+          })
+        ],
       ),
     );
   }

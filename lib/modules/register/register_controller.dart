@@ -101,9 +101,7 @@ class RegisterController extends GetxController {
           FirebaseStorage.instance.ref().child('logo/${DateTime.now()}');
       UploadTask uploadTask = storageReference.putFile(file.value);
       await uploadTask;
-      storageReference.getDownloadURL().then((fileURL) {
-        company.value.srcImage = fileURL;
-      });
+      company.value.srcImage = await storageReference.getDownloadURL();
     } else {
       company.value.srcImage = null;
     }
@@ -119,6 +117,15 @@ class RegisterController extends GetxController {
       return true;
     } else {
       BotToast.showText(text: "Verifique seus dados");
+      return false;
+    }
+  }
+
+  bool validateImage(){
+    if (!file.value.path.isNullOrBlank) {
+      return true;
+    }else{
+      BotToast.showText(text: "Adicione uma imagem antes de continuar");
       return false;
     }
   }

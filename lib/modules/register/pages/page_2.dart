@@ -44,44 +44,52 @@ class Page2 extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 30),
-                    child: Text(
-                      "Adicione um logo",
-                      style: TextStyle(fontSize: 17),
+                    child: GFButton(
+                      elevation: 0,
+                      onPressed: () {
+                        _showPicker(context);
+                      },
+                      color: ColorsApp.primary,
+                      shape: GFButtonShape.pills,
+                      icon: Icon(LineIcons.plus),
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Text(
+                          "Adicione seu logo",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.normal),
+                        ),
+                      ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 10),
                     child: Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          _showPicker(context);
-                        },
-                        child: Obx(() {
-                          return CircleAvatar(
-                            radius: 55,
-                            backgroundColor: ColorsApp.acent,
-                            child: controller.image.value != null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: controller.image.value,
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    width: 100,
-                                    height: 100,
-                                    child: Icon(
-                                      LineIcons.camera,
-                                      size: 40,
-                                      color: Colors.grey[800],
-                                      //color: ColorsApp.acentDark,
-                                    ),
-                                  ),
-                          );
-                        }),
-                      ),
+                      child: Obx(() {
+                        return CircleAvatar(
+                          radius: 55,
+                          backgroundColor: ColorsApp.acent,
+                          child: controller.image.value != null
+                              ? ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: controller.image.value,
+                          )
+                              : Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius:
+                                BorderRadius.circular(50)),
+                            width: 100,
+                            height: 100,
+                            child: Icon(
+                              LineIcons.camera,
+                              size: 40,
+                              color: Colors.grey[800],
+                              //color: ColorsApp.acentDark,
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                   ),
                   Container(
@@ -162,7 +170,7 @@ class Page2 extends StatelessWidget {
                         itemHeight: 80,
                         onChanged: (newValue) {
                           controller.company.update((val) {
-                            val.idTypeCompany =newValue;
+                            val.idTypeCompany = newValue;
                           });
                           controller.validateTipoEmpresa();
                         },
@@ -174,7 +182,6 @@ class Page2 extends StatelessWidget {
                       ),
                     );
                   }),
-
                 ],
               ),
             ),
@@ -227,7 +234,6 @@ class Page2 extends StatelessWidget {
           );
         });
   }
-
 
   List<DropdownMenuItem> listType() {
     return controller.listTc.value.map<DropdownMenuItem>((TypeCompany value) {
