@@ -39,7 +39,7 @@ void main() async {
 
 Future initHive()async{
   Directory directory = await getApplicationDocumentsDirectory();
-  await Hive.init(directory.path);
+  Hive.init(directory.path);
   Hive.registerAdapter<User>(UserAdapter());
   Hive.registerAdapter<Company>(CompanyAdapter());
   Hive.registerAdapter<Token>(TokenAdapter());

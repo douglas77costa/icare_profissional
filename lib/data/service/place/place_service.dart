@@ -20,4 +20,7 @@ abstract class PlaceService {
   @GET("place/this")
   Future<Place> thisPlace(@Header("Authorization") String token);
 
+  @PUT("place/update")
+  Future<Place> updatePlace(@Header("Authorization") String token, @Body() Place place);
+
 }

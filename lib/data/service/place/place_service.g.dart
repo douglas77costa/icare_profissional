@@ -72,4 +72,25 @@ class _PlaceService implements PlaceService {
     final value = Place.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<Place> updatePlace(token, place) async {
+    ArgumentError.checkNotNull(token, 'token');
+    ArgumentError.checkNotNull(place, 'place');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(place?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('place/update',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Place.fromJson(_result.data);
+    return value;
+  }
 }
