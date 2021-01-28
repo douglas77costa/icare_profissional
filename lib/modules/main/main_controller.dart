@@ -10,7 +10,6 @@ import 'package:icare_profissional/data/service/company/company_service.dart';
 import 'package:icare_profissional/data/service/user/user_service.dart';
 import 'package:icare_profissional/modules/menu/menu_controller.dart';
 import 'package:icare_profissional/modules/schedule/schedule_controller.dart';
-import 'package:icare_profissional/modules/splash/splash_controller.dart';
 import 'package:icare_profissional/util/util.dart';
 
 class MainController extends GetxController{

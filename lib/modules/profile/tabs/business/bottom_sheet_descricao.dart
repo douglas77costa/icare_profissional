@@ -8,10 +8,10 @@ import 'package:icare_profissional/ui/colors.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 
-import '../../profile_controller.dart';
+import 'business_tab_controller.dart';
 
 class BottomSheetDescricao extends StatelessWidget {
-  final ProfileController controller = Get.find();
+  final BusinessController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

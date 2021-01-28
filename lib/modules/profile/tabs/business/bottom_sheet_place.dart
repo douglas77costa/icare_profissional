@@ -5,13 +5,12 @@ import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icare_profissional/ui/colors.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:get/get.dart';
 
-import '../../profile_controller.dart';
+import 'business_tab_controller.dart';
 
 class BottomSheetPlace extends StatelessWidget {
-  final ProfileController controller = Get.find();
+  final BusinessController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

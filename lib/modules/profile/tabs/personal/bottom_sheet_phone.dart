@@ -7,10 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icare_profissional/ui/colors.dart';
 import 'package:get/get.dart';
 
-import 'business_tab_controller.dart';
+import 'personal_tab_controller.dart';
 
-class BottomSheetName extends StatelessWidget {
-  final BusinessController controller = Get.find();
+class BottomSheetPhone extends StatelessWidget {
+  final PersonalController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,20 +39,19 @@ class BottomSheetName extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 0, left: 30, right: 30),
+                    margin: EdgeInsets.only(top: 20, left: 30, right: 30),
                     child: TextFormField(
-                      onChanged: (value) {
-                        controller.newCompany.nomeFantasia = value;
+                      keyboardType: TextInputType.phone,
+                      onChanged: (value){
+                        controller.newUser.phone = value;
                       },
                       validator: (value) {
-                        return controller.validateNomeEmpresa();
+                        return controller.validatePhone();
                       },
-                      initialValue: controller.company.value.nomeFantasia,
+                      initialValue: controller.user.value.phone,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                          hintText: "Nome do seu negócio",
-                          labelText: 'Nome do seu negócio',
-                          border: OutlineInputBorder()),
+                          labelText: 'Telefone', border: OutlineInputBorder()),
                     ),
                   ),
                 ],
@@ -59,11 +59,11 @@ class BottomSheetName extends StatelessWidget {
               Container(
                 width: double.infinity,
                 padding:
-                    EdgeInsets.only(top: 45, bottom: 25, left: 30, right: 30),
+                EdgeInsets.only(top: 45, bottom: 25, left: 30, right: 30),
                 child: GFButton(
                   onPressed: () async {
                     Navigator.of(context, rootNavigator: true).pop();
-                    controller.updateCompany(VALUE_COMPANY.nomeFantasia);
+                    controller.updateUser(VALUE_USER.phone);
                   },
                   color: ColorsApp.acent,
                   text: "SALVAR",
@@ -72,7 +72,7 @@ class BottomSheetName extends StatelessWidget {
                   size: 50,
                   fullWidthButton: true,
                   textStyle:
-                      GoogleFonts.asap(color: ColorsApp.acent, fontSize: 20),
+                  GoogleFonts.asap(color: ColorsApp.acent, fontSize: 20),
                 ),
               )
             ],

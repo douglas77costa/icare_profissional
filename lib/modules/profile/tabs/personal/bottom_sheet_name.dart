@@ -4,13 +4,12 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icare_profissional/modules/profile/tabs/personal/personal_tab_controller.dart';
 import 'package:icare_profissional/ui/colors.dart';
 import 'package:get/get.dart';
 
-import 'business_tab_controller.dart';
-
 class BottomSheetName extends StatelessWidget {
-  final BusinessController controller = Get.find();
+  final PersonalController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,20 +37,33 @@ class BottomSheetName extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 0, left: 30, right: 30),
+                    margin: EdgeInsets.only(top: 20, left: 30, right: 30),
                     child: TextFormField(
                       onChanged: (value) {
-                        controller.newCompany.nomeFantasia = value;
+                        controller.newUser.firstName = value;
                       },
                       validator: (value) {
-                        return controller.validateNomeEmpresa();
+                        return controller.validateNome();
                       },
-                      initialValue: controller.company.value.nomeFantasia,
+                      initialValue: controller.user.value.firstName,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                          hintText: "Nome do seu negócio",
-                          labelText: 'Nome do seu negócio',
-                          border: OutlineInputBorder()),
+                          labelText: 'Nome', border: OutlineInputBorder()),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 30, left: 30, right: 30),
+                    child: TextFormField(
+                      onChanged: (value) {
+                        controller.newUser.lastName = value;
+                      },
+                      validator: (value) {
+                        return controller.validateSobrenome();
+                      },
+                      initialValue: controller.user.value.lastName,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: InputDecoration(
+                          labelText: 'Sobrenome', border: OutlineInputBorder()),
                     ),
                   ),
                 ],
@@ -63,7 +75,7 @@ class BottomSheetName extends StatelessWidget {
                 child: GFButton(
                   onPressed: () async {
                     Navigator.of(context, rootNavigator: true).pop();
-                    controller.updateCompany(VALUE_COMPANY.nomeFantasia);
+                    controller.updateUser(VALUE_USER.nome);
                   },
                   color: ColorsApp.acent,
                   text: "SALVAR",

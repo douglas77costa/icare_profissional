@@ -28,4 +28,7 @@ abstract class UserService {
   @GET('user/profile')
   Future<User> profile(@Header("Authorization") String token);
 
+  @PUT("user/update")
+  Future<User> update(@Header("Authorization") String token,@Body() User user);
+
 }

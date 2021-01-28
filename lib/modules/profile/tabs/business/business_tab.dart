@@ -13,9 +13,10 @@ import 'package:line_icons/line_icons.dart';
 import '../../profile_controller.dart';
 import 'bottom_sheet_name.dart';
 import 'bottom_sheet_type_company.dart';
+import 'business_tab_controller.dart';
 
 class BusinessTab extends StatelessWidget {
-  final ProfileController controller = Get.find();
+  final BusinessController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +171,7 @@ class BusinessTab extends StatelessWidget {
                           title: Obx(() {
                             var telefone = "";
                             try{
-                              UtilBrasilFields.obterTelefone(
+                              telefone = UtilBrasilFields.obterTelefone(
                                   "${controller.company.value.phone}");
                             }catch(e){
                               telefone = controller.company.value.phone;

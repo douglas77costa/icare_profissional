@@ -110,4 +110,25 @@ class _UserService implements UserService {
     final value = User.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<User> update(token, user) async {
+    ArgumentError.checkNotNull(token, 'token');
+    ArgumentError.checkNotNull(user, 'user');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(user?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('user/update',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'PUT',
+            headers: <String, dynamic>{r'Authorization': token},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = User.fromJson(_result.data);
+    return value;
+  }
 }
