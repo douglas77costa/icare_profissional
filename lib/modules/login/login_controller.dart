@@ -6,6 +6,7 @@ import 'package:icare_profissional/data/repository/token_repository.dart';
 import 'package:icare_profissional/data/request/login_request/login_request.dart';
 import 'package:icare_profissional/data/service/user/user_service.dart';
 import 'package:icare_profissional/util/util.dart';
+import 'package:flutter/material.dart';
 
 class LoginController extends GetxController {
 
@@ -53,7 +54,7 @@ class LoginController extends GetxController {
       try {
         var token = await userService.loginUser(LoginRequest(email.value,password.value));
         await TokenRepository.saveToken(token);
-        Get.toNamed("/main");
+        Get.offAndToNamed("/main");
         isLoad.value = false;
       } catch (obj) {
         isLoad.value = false;

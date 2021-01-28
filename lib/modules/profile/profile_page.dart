@@ -21,8 +21,7 @@ class ProfilePage extends StatelessWidget {
         centerTitle: true,
         leading: InkWell(
           onTap: () {
-            Navigator.pop(context);
-            Get.toNamed("/main");
+            Get.offAndToNamed("/main");
           },
           child: Icon(
             CupertinoIcons.back,

@@ -12,7 +12,7 @@ class ScheduleController extends GetxController{
   @override
   void onInit() async{
     user.value = await UserRepository.getUser();
-    getMessage();
+    await getMessage();
     super.onInit();
   }
 
@@ -25,7 +25,7 @@ class ScheduleController extends GetxController{
     else if(hours>=12 && hours<18){
       welcomeMessage.value = "Boa Tarde, ${user.value.firstName}";
     }
-    else if(hours>=18 && hours<23){
+    else if(hours>=18 && hours<=23){
       welcomeMessage.value = "Boa noite, ${user.value.firstName}";
     }
   }

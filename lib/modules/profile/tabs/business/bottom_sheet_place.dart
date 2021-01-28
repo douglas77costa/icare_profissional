@@ -38,11 +38,11 @@ class BottomSheetPlace extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   Container(
                     margin: EdgeInsets.only(top: 0, left: 30, right: 30),
                     child: TextFormField(
                       initialValue: controller.place.value.street,
+                      onChanged: (value){controller.newPlace.street = value;},
                       decoration: InputDecoration(
                           labelText: 'Endereço', border: OutlineInputBorder()),
                     ),
@@ -50,7 +50,8 @@ class BottomSheetPlace extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 30, left: 30, right: 30),
                     child: TextFormField(
-                      onChanged: (value){controller.place.value.number = value;},
+                      initialValue: controller.place.value.number,
+                      onChanged: (value){controller.newPlace.number = value;},
                       decoration: InputDecoration(
                           labelText: 'Número', border: OutlineInputBorder()),
                     ),
@@ -59,6 +60,7 @@ class BottomSheetPlace extends StatelessWidget {
                     margin: EdgeInsets.only(top: 30, left: 30, right: 30),
                     child: TextFormField(
                       initialValue: controller.place.value.neighbourhood,
+                      onChanged: (value){controller.newPlace.neighbourhood = value;},
                       decoration: InputDecoration(
                           labelText: 'Bairro', border: OutlineInputBorder()),
                     ),
@@ -68,7 +70,7 @@ class BottomSheetPlace extends StatelessWidget {
                     child: TextFormField(
                       initialValue: controller.place.value.complement,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      onChanged: (value){controller.place.value.complement = value;},
+                      onChanged: (value){controller.newPlace.complement = value;},
                       decoration: InputDecoration(
                           labelText: 'Complemento', border: OutlineInputBorder()),
                     ),
@@ -77,6 +79,7 @@ class BottomSheetPlace extends StatelessWidget {
                     margin: EdgeInsets.only(top: 30, left: 30, right: 30),
                     child: TextFormField(
                       initialValue: controller.place.value.city,
+                      onChanged: (value){controller.newPlace.city = value;},
                       decoration: InputDecoration(
                           labelText: 'Cidade', border: OutlineInputBorder()),
                     ),
@@ -85,6 +88,7 @@ class BottomSheetPlace extends StatelessWidget {
                     margin: EdgeInsets.only(top: 30, left: 30, right: 30),
                     child: TextFormField(
                       initialValue: controller.place.value.state,
+                      onChanged: (value){controller.newPlace.state = value;},
                       decoration: InputDecoration(
                           labelText: 'Estado', border: OutlineInputBorder()),
                     ),
@@ -93,6 +97,7 @@ class BottomSheetPlace extends StatelessWidget {
                     margin: EdgeInsets.only(top: 30, left: 30, right: 30),
                     child: TextFormField(
                       initialValue: controller.place.value.zipCode,
+                      onChanged: (value){controller.newPlace.zipCode = value;},
                       decoration: InputDecoration(
                           labelText: 'CEP', border: OutlineInputBorder()),
                     ),
@@ -106,7 +111,7 @@ class BottomSheetPlace extends StatelessWidget {
                 child: GFButton(
                   onPressed: () async {
                     Navigator.of(context, rootNavigator: true).pop();
-                    controller.updateCompany(VALUE_COMPANY.descricao);
+                    controller.updatePlace();
                   },
                   color: ColorsApp.acent,
                   text: "SALVAR",

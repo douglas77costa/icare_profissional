@@ -25,13 +25,14 @@ class CompanyAdapter extends TypeAdapter<Company> {
       srcImage: fields[5] as String,
       phone: fields[6] as String,
       idTypeCompany: fields[7] as int,
+      nameImage: fields[8] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Company obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class CompanyAdapter extends TypeAdapter<Company> {
       ..writeByte(6)
       ..write(obj.phone)
       ..writeByte(7)
-      ..write(obj.idTypeCompany);
+      ..write(obj.idTypeCompany)
+      ..writeByte(8)
+      ..write(obj.nameImage);
   }
 
   @override
@@ -75,6 +78,7 @@ Company _$CompanyFromJson(Map<String, dynamic> json) {
     srcImage: json['srcImage'] as String,
     phone: json['phone'] as String,
     idTypeCompany: json['idTypeCompany'] as int,
+    nameImage: json['nameImage'] as String,
   );
 }
 
@@ -87,4 +91,5 @@ Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
       'srcImage': instance.srcImage,
       'phone': instance.phone,
       'idTypeCompany': instance.idTypeCompany,
+      'nameImage': instance.nameImage,
     };

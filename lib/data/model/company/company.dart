@@ -22,6 +22,8 @@ class Company {
   String phone;
   @HiveField(7)
   int idTypeCompany;
+  @HiveField(8)
+  String nameImage;
 
   Company(
       {this.id,
@@ -31,7 +33,8 @@ class Company {
       this.descricao,
       this.srcImage,
       this.phone,
-      this.idTypeCompany});
+      this.idTypeCompany,
+      this.nameImage});
 
   factory Company.fromJson(Map<String, dynamic> json) =>
       _$CompanyFromJson(json);

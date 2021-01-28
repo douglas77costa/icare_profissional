@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:icare_profissional/modules/profile/tabs/business/bottom_sheet_descricao.dart';
 import 'package:icare_profissional/modules/profile/tabs/business/bottom_sheet_phone.dart';
 import 'package:icare_profissional/modules/profile/tabs/business/bottom_sheet_place.dart';
 import 'package:icare_profissional/ui/colors.dart';
+import 'package:line_icons/line_icons.dart';
 
 import '../../profile_controller.dart';
 import 'bottom_sheet_name.dart';
@@ -14,6 +16,7 @@ import 'bottom_sheet_type_company.dart';
 
 class BusinessTab extends StatelessWidget {
   final ProfileController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,36 +26,43 @@ class BusinessTab extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  height: 150,
-                  margin: EdgeInsets.only(top: 30),
+                  margin: EdgeInsets.only(top: 10),
+                  child: GFButton(
+                    elevation: 0,
+                    onPressed: () {
+                      _showPicker(context);
+                    },
+                    color: ColorsApp.primary,
+                    shape: GFButtonShape.pills,
+                    icon: Icon(LineIcons.edit),
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Text(
+                        "Trocar imagem",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.normal),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
                   width: double.infinity,
                   child: Obx(() {
                     return Center(
                       child: CircleAvatar(
-                        radius: 110,
+                        radius: 60,
                         backgroundColor: ColorsApp.acent,
                         child: CircleAvatar(
-                          radius: 70,
+                          radius: 55,
                           backgroundColor: ColorsApp.acent,
                           backgroundImage: NetworkImage(
-                              "${controller.company.value.srcImage}"),
+                              "${controller.urlImage.value}"),
                         ),
                       ),
                     );
                   }),
                 ),
-                Obx(() {
-                  return Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(top: 20, bottom: 20),
-                    child: Center(
-                      child: Text(
-                        "${controller.company.value.nomeFantasia}",
-                        style: TextStyle(color: ColorsApp.acent, fontSize: 30),
-                      ),
-                    ),
-                  );
-                }),
                 Divider(),
                 Container(
                   child: Material(
@@ -158,8 +168,16 @@ class BusinessTab extends StatelessWidget {
                         padding: EdgeInsets.only(left: 10, right: 10),
                         child: ListTile(
                           title: Obx(() {
+                            var telefone = "";
+                            try{
+                              UtilBrasilFields.obterTelefone(
+                                  "${controller.company.value.phone}");
+                            }catch(e){
+                              telefone = controller.company.value.phone;
+                              print(e);
+                            }
                             return Text(
-                              UtilBrasilFields.obterTelefone("${controller.company.value.phone}"),
+                              telefone,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
@@ -231,6 +249,36 @@ class BusinessTab extends StatelessWidget {
     );
   }
 
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: Icon(LineIcons.image),
+                      title: Text('Imagem da Galeria'),
+                      onTap: () {
+                        controller.imgFromGallery();
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading: Icon(LineIcons.camera),
+                    title: Text('Abrir câmera'),
+                    onTap: () {
+                      controller.imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   void _editName(context) {
     showModalBottomSheet(
         context: context,
@@ -240,6 +288,7 @@ class BusinessTab extends StatelessWidget {
           return BottomSheetName();
         });
   }
+
   void _editDescricao(context) {
     showModalBottomSheet(
         context: context,
@@ -279,5 +328,4 @@ class BusinessTab extends StatelessWidget {
           return BottomSheetPlace();
         });
   }
-
 }

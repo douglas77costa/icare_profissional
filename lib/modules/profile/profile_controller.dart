@@ -1,7 +1,12 @@
+import 'dart:ui';
+
 import 'package:bot_toast/bot_toast.dart';
+import 'dart:io';
 import 'package:cpfcnpj/cpfcnpj.dart';
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:icare_profissional/data/model/company/company.dart';
 import 'package:icare_profissional/data/model/place/place.dart';
@@ -14,6 +19,7 @@ import 'package:icare_profissional/data/service/company/company_service.dart';
 import 'package:icare_profissional/data/service/place/place_service.dart';
 import 'package:icare_profissional/data/service/type_company/type_company_service.dart';
 import 'package:icare_profissional/util/util.dart';
+import 'package:image_picker/image_picker.dart';
 
 enum VALUE_COMPANY { nomeFantasia, descricao, srcImage, phone, typeCompany }
 
@@ -33,6 +39,10 @@ class ProfileController extends GetxController {
   final listTc = List<TypeCompany>().obs;
 
   var typeCompValue = 0.obs;
+  final file = File("").obs;
+
+  var urlImage ="".obs;
+
 
   var token = "";
 
@@ -50,6 +60,8 @@ class ProfileController extends GetxController {
     await getTypeCompany();
     await getPlace();
     isLoad.value = false;
+    newPlace = place.value;
+    urlImage.value = company.value.srcImage;
     super.onInit();
   }
 
@@ -82,6 +94,32 @@ class ProfileController extends GetxController {
             break;
         }
       }
+    }
+  }
+
+  void imgFromCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.camera, imageQuality: 50);
+    file.value = File(pickedFile.path);
+    uploadFile();
+  }
+
+  void imgFromGallery() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, imageQuality: 50);
+    file.value = File(pickedFile.path);
+    uploadFile();
+  }
+
+  Future uploadFile() async {
+    if (!file.value.path.isNullOrBlank) {
+      var storageReference =
+      FirebaseStorage.instance.ref().child(company.value.nameImage);
+      UploadTask uploadTask = storageReference.putFile(file.value);
+      await uploadTask;
+      urlImage.value = await storageReference.getDownloadURL();
+    } else {
+      company.value.srcImage = null;
     }
   }
 
@@ -121,6 +159,29 @@ class ProfileController extends GetxController {
             BotToast.showText(
                 text:
                     "Erro ao salvar dados: ${res.statusCode} -> ${res.statusMessage}");
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  Future updatePlace() async {
+    if (await Util.isConected()) {
+      isLoad.value = true;
+      try {
+        newPlace.idCompany = company.value.id;
+        place.value = await placeService.updatePlace(token, newPlace);
+        isLoad.value = false;
+      } catch (obj) {
+        isLoad.value = false;
+        switch (obj.runtimeType) {
+          case DioError:
+            final res = (obj as DioError).response;
+            BotToast.showText(
+                text:
+                "Erro ao salvar local: ${res.statusCode} -> ${res.statusMessage}");
             break;
           default:
             break;

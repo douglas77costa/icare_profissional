@@ -20,11 +20,11 @@ class MenuPage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 35),
+            margin: EdgeInsets.only(top: 50),
             child: Material(
               child: InkWell(
                 onTap: () {
-                  Get.toNamed("/profile");
+                  Get.offAndToNamed("/profile");
                 },
                 child: Container(
                   width: double.infinity,

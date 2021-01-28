@@ -97,11 +97,13 @@ class RegisterController extends GetxController {
 
   Future uploadFile() async {
     if (!file.value.path.isNullOrBlank) {
+      var nameImage = 'logo/${DateTime.now()}';
       var storageReference =
-          FirebaseStorage.instance.ref().child('logo/${DateTime.now()}');
+          FirebaseStorage.instance.ref().child(nameImage);
       UploadTask uploadTask = storageReference.putFile(file.value);
       await uploadTask;
       company.value.srcImage = await storageReference.getDownloadURL();
+      company.value.nameImage = nameImage;
     } else {
       company.value.srcImage = null;
     }
