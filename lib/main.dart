@@ -17,6 +17,7 @@ import 'package:icare_profissional/ui/app_theme.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +26,10 @@ void main() async {
 }
 
 Future initHive()async{
-  Directory directory = await getApplicationDocumentsDirectory();
-  Hive.init(directory.path);
+  if(!kIsWeb){
+    Directory directory = await getApplicationDocumentsDirectory();
+    Hive.init(directory.path);
+  }
   Hive.registerAdapter<User>(UserAdapter());
   Hive.registerAdapter<Company>(CompanyAdapter());
   Hive.registerAdapter<Token>(TokenAdapter());
@@ -61,7 +64,7 @@ class IcareApp extends StatelessWidget {
             minWidth: 480,
             defaultScale: true,
             breakpoints: [
-              ResponsiveBreakpoint.autoScale(480, name: MOBILE),
+              ResponsiveBreakpoint.resize(480, name: MOBILE),
               ResponsiveBreakpoint.resize(600, name: MOBILE),
               ResponsiveBreakpoint.resize(850, name: TABLET),
               ResponsiveBreakpoint.resize(1080, name: DESKTOP),
