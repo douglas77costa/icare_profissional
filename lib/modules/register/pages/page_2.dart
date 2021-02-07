@@ -21,20 +21,6 @@ class Page2 extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: GFAppBar(
-        title: Text("Dados do seu estabelecimento"),
-        elevation: 2,
-        centerTitle: true,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            CupertinoIcons.back,
-            color: Colors.white,
-          ),
-        ),
-      ),
       body: Stack(
         children: [
           SingleChildScrollView(

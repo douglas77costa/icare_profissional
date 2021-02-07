@@ -16,20 +16,6 @@ class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GFAppBar(
-        title: Text("Insira seus dados pessoais"),
-        elevation: 2,
-        centerTitle: true,
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            CupertinoIcons.back,
-            color: Colors.white,
-          ),
-        ),
-      ),
       body: Stack(
         children: [
           SingleChildScrollView(

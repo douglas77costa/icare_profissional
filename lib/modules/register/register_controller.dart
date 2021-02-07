@@ -36,6 +36,8 @@ class RegisterController extends GetxController {
   final listTc = List<TypeCompany>().obs;
   final isLoad = true.obs;
   final isError = false.obs;
+  final statusText = "".obs;
+  final progressBarValue = 0.33.obs;
 
   //Models Register
   final user = User().obs;
@@ -52,6 +54,7 @@ class RegisterController extends GetxController {
 
   void onInit() async {
     super.onInit();
+    statusText.value = "Insira seus dados pessoais";
     getTypeCompany();
   }
 

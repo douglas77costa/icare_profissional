@@ -1,5 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,9 +18,34 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
     return Scaffold(
+      appBar: GFAppBar(
+        title: Obx((){
+          return Text(controller.statusText.value);
+        }),
+        elevation: 2,
+        centerTitle: true,
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            CupertinoIcons.back,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: Column(
         children: [
+          Container(
+            child: Obx((){
+              return LinearProgressIndicator(
+                value: controller.progressBarValue.value,
+              );
+            }),
+          ),
           Flexible(
             child: PageView(
               scrollDirection: Axis.horizontal,
@@ -40,6 +67,8 @@ class RegisterPage extends StatelessWidget {
                   case 0:
                     if(controller.validateUser()){
                       if(await controller.checkUser()){
+                        controller.statusText.value = "Dados do seu estabelecimento";
+                        controller.progressBarValue.value = 0.66;
                         pageController.nextPage(
                             duration: Duration(milliseconds: 500),
                             curve: Curves.ease);
@@ -52,6 +81,8 @@ class RegisterPage extends StatelessWidget {
                     if(controller.validateImage()){
                       if (controller.validateCompany()) {
                         if(await controller.searchCep()){
+                          controller.statusText.value = "Local do seu estabelecimento";
+                          controller.progressBarValue.value = 1.0;
                           pageController.nextPage(
                               duration: Duration(milliseconds: 500),
                               curve: Curves.ease);
