@@ -14,9 +14,9 @@ import 'bottom_sheet_password.dart';
 import 'bottom_sheet_phone.dart';
 
 class PersonalTab extends StatelessWidget {
-  final PersonalController controller = Get.find();
   @override
   Widget build(BuildContext context) {
+    final PersonalController controller = Get.put(PersonalController());
     return Container(
       child: Stack(
         children: [
@@ -26,7 +26,7 @@ class PersonalTab extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: 20,bottom: 20),
                   child: Center(
-                    child: Image.asset("images/register_image.png", fit: BoxFit.cover,width: 200,),
+                    child: Image.asset("images/avatar.png", fit: BoxFit.cover,width: 139,),
                   ),
                 ),
                 Divider(),

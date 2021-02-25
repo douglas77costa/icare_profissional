@@ -11,7 +11,7 @@ import 'package:icare_profissional/ui/colors.dart';
 import 'package:line_icons/line_icons.dart';
 
 class ProfilePage extends StatelessWidget {
-  final ProfileController controller = Get.find();
+  //final ProfileController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class ProfilePage extends StatelessWidget {
         centerTitle: true,
         leading: InkWell(
           onTap: () {
-            Get.offAndToNamed("/main");
+            Get.offNamed("/main");
           },
           child: Icon(
             CupertinoIcons.back,

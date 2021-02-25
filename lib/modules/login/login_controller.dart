@@ -54,7 +54,7 @@ class LoginController extends GetxController {
       try {
         var token = await userService.loginUser(LoginRequest(email.value,password.value));
         await TokenRepository.saveToken(token);
-        Get.offAndToNamed("/main");
+        Get.offAllNamed("/main");
         isLoad.value = false;
       } catch (obj) {
         isLoad.value = false;

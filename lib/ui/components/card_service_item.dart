@@ -25,7 +25,7 @@ class CardServiceItem extends StatelessWidget {
                   Row(
                     children: [
                       GFAvatar(
-                        backgroundImage: AssetImage('images/icon.png'),
+                        backgroundImage: AssetImage('images/icon_new.png'),
                         radius: 60,
                       ),
                       Container(
@@ -102,7 +102,7 @@ class CardServiceItem extends StatelessWidget {
                     child: PopupMenuButton<Acao>(
                       onSelected: (Acao result) {},
                       itemBuilder: (BuildContext context) =>
-                          <PopupMenuEntry<Acao>>[
+                      <PopupMenuEntry<Acao>>[
                         const PopupMenuItem<Acao>(
                           value: Acao.editar,
                           child: Text('Editar'),

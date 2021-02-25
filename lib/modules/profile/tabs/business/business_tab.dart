@@ -17,9 +17,9 @@ import 'business_tab_controller.dart';
 
 class BusinessTab extends StatelessWidget {
   final BusinessController controller = Get.find();
-
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Stack(
         children: [
@@ -27,7 +27,7 @@ class BusinessTab extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: EdgeInsets.only(top: 20),
                   child: GFButton(
                     elevation: 0,
                     onPressed: () {

@@ -10,6 +10,8 @@ import 'package:icare_profissional/modules/profile/profile_bind.dart';
 import 'package:icare_profissional/modules/profile/profile_page.dart';
 import 'package:icare_profissional/modules/register/register_bind.dart';
 import 'package:icare_profissional/modules/register/register_page.dart';
+import 'package:icare_profissional/modules/services/services_bind.dart';
+import 'package:icare_profissional/modules/services/services_page.dart';
 import 'package:icare_profissional/modules/splash/splash_bind.dart';
 import 'package:icare_profissional/modules/splash/splash_page.dart';
 
@@ -21,4 +23,5 @@ final List<GetPage> routes = [
   GetPage(name: '/main', page: () => MainPage(), binding: MainBind()),
   GetPage(name: '/menu', page: () => MenuPage(), binding: MenuBind()),
   GetPage(name: '/profile', page: () => ProfilePage(), binding: ProfileBind()),
+  GetPage(name: '/services', page: () => ServicesPage(), binding: ServicesBind()),
 ];

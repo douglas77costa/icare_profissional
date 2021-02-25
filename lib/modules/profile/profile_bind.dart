@@ -7,14 +7,8 @@ import 'package:icare_profissional/modules/profile/tabs/personal/personal_tab_co
 class ProfileBind extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ProfileController>(() {
-      return ProfileController();
-    });
-    Get.lazyPut<BusinessController>(() {
-      return BusinessController();
-    });
-    Get.lazyPut<PersonalController>(() {
-      return PersonalController();
-    });
+    Get.put(ProfileController());
+    Get.put(BusinessController());
+    //Get.put(PersonalController());
   }
 }

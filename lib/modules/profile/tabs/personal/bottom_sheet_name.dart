@@ -9,9 +9,9 @@ import 'package:icare_profissional/ui/colors.dart';
 import 'package:get/get.dart';
 
 class BottomSheetName extends StatelessWidget {
-  final PersonalController controller = Get.find();
   @override
   Widget build(BuildContext context) {
+    final PersonalController controller = Get.find();
     return SafeArea(
         top: true,
         child: Container(
@@ -46,7 +46,7 @@ class BottomSheetName extends StatelessWidget {
                         return controller.validateNome();
                       },
                       initialValue: controller.user.value.firstName,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      autovalidateMode: AutovalidateMode.always,
                       decoration: InputDecoration(
                           labelText: 'Nome', border: OutlineInputBorder()),
                     ),
@@ -74,8 +74,11 @@ class BottomSheetName extends StatelessWidget {
                     EdgeInsets.only(top: 45, bottom: 25, left: 30, right: 30),
                 child: GFButton(
                   onPressed: () async {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    controller.updateUser(VALUE_USER.nome);
+                    await controller.updateUser(VALUE_USER.nome).then((value) => {
+                      if(value){
+                        Navigator.of(context, rootNavigator: true).pop()
+                      }
+                    });
                   },
                   color: ColorsApp.acent,
                   text: "SALVAR",

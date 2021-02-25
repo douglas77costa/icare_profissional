@@ -16,6 +16,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black87,
       body: Center(
         child: Stack(
           children: [
@@ -25,7 +26,7 @@ class LoginPage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 0),
                     child: Image.asset(
-                      "images/icon.png",
+                      "images/icon_new.png",
                       fit: BoxFit.cover,
                       width: 200,
                     ),

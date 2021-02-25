@@ -18,7 +18,7 @@ class SplashPage extends StatelessWidget {
         style: TextStyle(fontSize: 30, color: Colors.white),
       ),
       navigateAfterSeconds:controller.redirectPage(),
-      image: Image.asset("images/icon.png"),
+      image: Image.asset("images/icon_new.png"),
       styleTextUnderTheLoader: TextStyle(),
       photoSize: 100.0,
       backgroundColor: ColorsApp.dark,

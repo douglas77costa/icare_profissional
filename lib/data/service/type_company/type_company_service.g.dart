@@ -9,7 +9,7 @@ part of 'type_company_service.dart';
 class _TypeCompanyService implements TypeCompanyService {
   _TypeCompanyService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'https://icare-app-br.herokuapp.com/';
+    baseUrl ??= 'http://192.168.0.2:8080/';
   }
 
   final Dio _dio;
