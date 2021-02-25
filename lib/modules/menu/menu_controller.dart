@@ -25,7 +25,7 @@ class MenuController extends GetxController {
 
   Future logOut() async {
     await Hive.deleteFromDisk();
-    Get.offAndToNamed("/home");
+    Get.offAllNamed("/home");
   }
 
 }

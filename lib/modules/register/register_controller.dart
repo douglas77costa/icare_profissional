@@ -27,7 +27,7 @@ class RegisterController extends GetxController {
   final showPassword = false.obs;
   final RxString textErrorPass = "".obs;
   final image = Image.asset(
-    "images/icon.png",
+    "images/icon_new.png",
     width: 100,
     height: 100,
     fit: BoxFit.fitHeight,
@@ -273,7 +273,7 @@ class RegisterController extends GetxController {
       try {
         var token = await userService.loginUser(LoginRequest(user.value.email,user.value.password));
         await TokenRepository.saveToken(token);
-        Get.toNamed("/main");
+        Get.offAllNamed("/main");
         isLoad.value = false;
       } catch (obj) {
         isLoad.value = false;

@@ -112,5 +112,5 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path_android: "images/icon.png"
-  image_path_ios: "images/icon.png"
+  image_path_android: "images/icon_new.png"
+  image_path_ios: "images/icon_new.png"

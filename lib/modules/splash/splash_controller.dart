@@ -9,9 +9,9 @@ class SplashController extends GetxController{
   Future<VoidCallback> redirectPage()async{
     var user = await UserRepository.allUser();
     if(user.toList().isNullOrBlank){
-      return (){Get.offAndToNamed("/home");};
+      return (){Get.offAllNamed("/home");};
     }else{
-      return (){Get.offAndToNamed("/main");};
+      return (){Get.offAllNamed("/main");};
     }
   }
 }

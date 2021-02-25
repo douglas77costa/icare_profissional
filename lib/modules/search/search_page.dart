@@ -6,9 +6,9 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GFAppBar(
-        title: Text("Pesquisa"),
+        title:  Text("Pesquisa"),
         elevation: 2,
-        centerTitle: true,
+        centerTitle: false,
         automaticallyImplyLeading: false,
       ),
     );

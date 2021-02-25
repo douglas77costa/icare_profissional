@@ -17,14 +17,20 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: GFAppBar(
+          title: Text("Menu"),
+          elevation: 2,
+          centerTitle: false,
+          automaticallyImplyLeading: false,
+        ),
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 50),
+            margin: EdgeInsets.only(top: 10),
             child: Material(
               child: InkWell(
                 onTap: () {
-                  Get.offAndToNamed("/profile");
+                  Get.offAllNamed("/profile");
                 },
                 child: Container(
                   width: double.infinity,
@@ -48,6 +54,39 @@ class MenuPage extends StatelessWidget {
                         'Meu perfil e dados comerciais',
                         style: TextStyle(color: Colors.white),
                       ),
+                    ),
+                    trailing: Icon(CupertinoIcons.right_chevron),
+                  ),
+                ),
+              ),
+              color: Colors.transparent,
+            ),
+          ),
+          Divider(),
+          Container(
+            child: Material(
+              child: InkWell(
+                onTap: () {
+                  Get.offAllNamed("/services");
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: ListTile(
+                    leading: GFAvatar(
+                      child: Icon(LineIcons.tag,
+                          size: 30, color: ColorsApp.acentLight),
+                      radius: 30,
+                    ),
+                    title: Text(
+                      "Serviços",
+                      style: TextStyle(
+                        fontSize: 17,
+                      ),
+                    ),
+                    subtitle: Text(
+                      'Gerenciar serviços',
+                      style: TextStyle(color: Colors.white),
                     ),
                     trailing: Icon(CupertinoIcons.right_chevron),
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:icare_profissional/modules/dashboard/dashboard_page.dart';
 import 'package:icare_profissional/modules/main/main_controller.dart';
 import 'package:icare_profissional/modules/menu/menu_page.dart';
 import 'package:icare_profissional/modules/notification/notification_page.dart';
@@ -28,8 +29,26 @@ class MainPage extends StatelessWidget {
             screens: _buildScreens(),
             items: _navBarsItems(),
             backgroundColor: ColorsApp.primary,
+            decoration: NavBarDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 3.0, // soften the shadow
+                  spreadRadius:0.5, //extend the shadow
+                  offset: Offset(
+                    0.0, // Move to right 10  horizontally
+                    1.0, // Move to bottom 10 Vertically
+                  ),
+                )
+              ]
+            ),
             navBarStyle:
-            NavBarStyle.style3, // Choose the nav bar style with this property.
+            NavBarStyle.style3,
+            screenTransitionAnimation: ScreenTransitionAnimation(
+              curve: Curves.easeInOut,
+              duration: Duration(milliseconds: 300),
+              animateTabTransition: true
+            ),// Choose the nav bar style with this property.
           ),
           Obx(() {
             return Visibility(
@@ -53,6 +72,11 @@ class MainPage extends StatelessWidget {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
+          icon: Icon(LineIcons.home),
+          title: ("Dashboard"),
+          inactiveColor: Colors.white,
+          activeColor: ColorsApp.acent),
+      PersistentBottomNavBarItem(
           icon: Icon(LineIcons.calendar_check_o),
           title: ("Agenda"),
           inactiveColor: Colors.white,
@@ -60,11 +84,6 @@ class MainPage extends StatelessWidget {
       PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.search),
           title: ("Pesquisa"),
-          inactiveColor: Colors.white,
-          activeColor: ColorsApp.acent),
-      PersistentBottomNavBarItem(
-          icon: Icon(LineIcons.tag),
-          title: ("Serviços"),
           inactiveColor: Colors.white,
           activeColor: ColorsApp.acent),
       PersistentBottomNavBarItem(
@@ -76,6 +95,9 @@ class MainPage extends StatelessWidget {
   }
 
   List<Widget> _buildScreens() {
-    return [SchedulePage(), SearchPage(),ServicesPage(), MenuPage()];
+    return [DashboardPage(),SchedulePage(), SearchPage(), MenuPage()];
   }
+
+  //ServicesPage(
+//icon: Icon(LineIcons.tag),
 }

@@ -8,21 +8,16 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black87,
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset("images/bg_img.png", fit: BoxFit.cover),
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: Colors.black87,
-          ),
           Column(
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 150),
                 child: Image.asset(
-                  "images/icon.png",
+                  "images/icon_new.png",
                   fit: BoxFit.cover,
                   width: 200,
                 ),
@@ -42,7 +37,7 @@ class HomePage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: 15, left: 45, right: 45),
                 child: Text(
-                  "Cadastre seu salão ou barbearia e ofereça serviços digitais exclusivos aos seus clientes!",
+                  "Cadastre-se e ofereça serviços digitais exclusivos aos seus clientes!",
                   style: GoogleFonts.montserrat(fontSize: 24),
                   textAlign: TextAlign.center,
                 ),
