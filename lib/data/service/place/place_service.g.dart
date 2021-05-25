@@ -9,7 +9,7 @@ part of 'place_service.dart';
 class _PlaceService implements PlaceService {
   _PlaceService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    baseUrl ??= 'http://192.168.0.2:8080/';
+    baseUrl ??= 'http://localhost:8080/';
   }
 
   final Dio _dio;
